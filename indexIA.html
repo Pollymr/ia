@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0F1D33">
+<meta name="description" content="Materiais das aulas, ferramentas e envio de atividades do curso Inteligência Artificial Aplicada da ABTEC.">
+<title>Inteligência Artificial Aplicada | ABTEC</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #0F1D33;
+    --surface: #15263F;
+    --surface-2: #1B3050;
+    --line: #2A4162;
+    --line-strong: #4A678F;
+    --text: #E8EEF7;
+    --muted: #A3B5CD;
+    --accent: #6CB6D6;
+    --accent-ink: #0B2233;
+    --amber: #E0B15A;
+
+    --c-persona: #6CB6D6;
+    --c-contexto: #A59AE0;
+    --c-tarefa: #E0B15A;
+    --c-formato: #8FC5A0;
+    --c-restricao: #D98FA0;
+
+    --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+    --font-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+    --font-mono: "IBM Plex Mono", Consolas, "Courier New", monospace;
+
+    --wrap: 1120px;
+    --gutter: clamp(20px, 5vw, 48px);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 88px;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  a { color: inherit; }
+
+  :focus-visible {
+    outline: 3px solid var(--amber);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  .wrap {
+    width: 100%;
+    max-width: var(--wrap);
+    margin: 0 auto;
+    padding-left: var(--gutter);
+    padding-right: var(--gutter);
+  }
+
+  /* ---------- Topo ---------- */
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(15, 29, 51, 0.9);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+  .topbar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: 64px;
+  }
+  .brand {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    text-decoration: none;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.2rem;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+  }
+  .brand small {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  .topbar-right { display: flex; align-items: center; gap: 8px; }
+  .nav { display: flex; gap: 4px; }
+  .nav a {
+    text-decoration: none;
+    color: var(--muted);
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 8px 12px;
+    border-radius: 8px;
+  }
+  .nav a:hover { color: var(--text); background: var(--surface); }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 46px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.98rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color .15s ease, border-color .15s ease, transform .15s ease;
+  }
+  .btn-primary { background: var(--accent); color: var(--accent-ink); }
+  .btn-primary:hover { background: #8CC8E2; }
+  .btn:active { transform: translateY(1px); }
+  .btn.is-off {
+    cursor: default;
+    color: var(--muted);
+    background: transparent;
+    border-color: var(--line);
+    border-style: dashed;
+    font-weight: 500;
+  }
+  .btn.is-off:hover { background: transparent; border-color: var(--line); }
+  .btn.is-off:active { transform: none; }
+  .btn-sm { min-height: 40px; padding: 8px 16px; font-size: 0.93rem; }
+
+  /* ---------- Faixa de abertura ---------- */
+  .hero { padding: clamp(28px, 4vw, 52px) 0 clamp(32px, 4vw, 56px); }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 36px;
+    align-items: center;
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(2.2rem, 5.4vw, 3.8rem);
+    line-height: 1.04;
+    letter-spacing: -0.03em;
+    margin: 0 0 16px;
+    text-wrap: balance;
+  }
+  .hero p.lead {
+    font-size: clamp(1.02rem, 1.8vw, 1.2rem);
+    color: var(--muted);
+    max-width: 32em;
+    margin: 0;
+  }
+
+  /* Janela de prompt */
+  .prompt-window {
+    width: 100%;
+    max-width: 640px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.55);
+  }
+  .pw-bar {
+    padding: 10px 18px;
+    border-bottom: 1px solid var(--line);
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  .pw-body { padding: 16px 20px 4px; min-height: 176px; }
+  .pw-prompt {
+    font-family: var(--font-mono);
+    font-size: 0.92rem;
+    line-height: 1.8;
+    margin: 0;
+  }
+  .seg { border-bottom: 2px solid transparent; padding-bottom: 1px; }
+  .seg-persona   { border-color: var(--c-persona); }
+  .seg-contexto  { border-color: var(--c-contexto); }
+  .seg-tarefa    { border-color: var(--c-tarefa); }
+  .seg-formato   { border-color: var(--c-formato); }
+  .seg-restricao { border-color: var(--c-restricao); }
+
+  .cursor {
+    display: inline-block;
+    width: 8px; height: 1.05em;
+    margin-left: 2px;
+    vertical-align: text-bottom;
+    background: var(--amber);
+    animation: blink 1s steps(2, start) infinite;
+  }
+  .cursor.is-done { display: none; }
+  @keyframes blink { to { visibility: hidden; } }
+
+  .pw-reply {
+    margin: 14px 0 0;
+    padding: 14px 0 10px;
+    border-top: 1px dashed var(--line);
+    font-size: 0.92rem;
+    color: var(--muted);
+    opacity: 0;
+    transition: opacity .6s ease;
+  }
+  .pw-reply.is-on { opacity: 1; }
+  .pw-reply ol { margin: 0; padding-left: 1.2em; }
+  .pw-reply li { margin-bottom: 4px; }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    margin: 0;
+    padding: 12px 20px 14px;
+    list-style: none;
+    border-top: 1px solid var(--line);
+    background: var(--surface-2);
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  .legend li { display: flex; align-items: center; gap: 8px; }
+  .legend i { display: block; width: 18px; height: 3px; border-radius: 2px; }
+
+  /* ---------- Seções ---------- */
+  .section { padding: clamp(40px, 6vw, 80px) 0; border-top: 1px solid var(--line); }
+  .split { display: grid; grid-template-columns: 1fr; gap: 28px; }
+  .section-head h2 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(1.7rem, 3.4vw, 2.3rem);
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin: 0 0 12px;
+  }
+  .section-head p { margin: 0; color: var(--muted); max-width: 26em; }
+
+  /* Módulos */
+  .sessions { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+  .session {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 4px 12px;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .session .num {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.9rem;
+    line-height: 1;
+    color: var(--line-strong);
+    grid-row: span 2;
+    align-self: start;
+  }
+  .session h3 { margin: 0; font-size: 1.12rem; font-weight: 600; line-height: 1.3; }
+  .session p { margin: 4px 0 0; color: var(--muted); font-size: 0.97rem; }
+  .session .btn { grid-column: 2; justify-self: start; margin-top: 12px; }
+
+  /* Ferramentas */
+  .tool-groups {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 36px 32px;
+    align-items: start;
+  }
+  .tool-group h3 {
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--accent);
+    margin: 0 0 8px;
+  }
+  .tool-group ul { list-style: none; margin: 0; padding: 0; }
+  .tool-group li { padding: 12px 0; border-top: 1px solid var(--line); }
+  .tool-group li:last-child { border-bottom: 1px solid var(--line); }
+  .tool-group a {
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: var(--line-strong);
+    text-underline-offset: 4px;
+  }
+  .tool-group a:hover { text-decoration-color: var(--accent); color: #fff; }
+  .tool-group span { display: block; color: var(--muted); font-size: 0.93rem; margin-top: 2px; }
+
+  /* Pasta da turma */
+  .deliver { display: grid; grid-template-columns: 1fr; gap: 20px; align-items: start; }
+  @media (min-width: 720px) { .deliver { grid-template-columns: 1fr 1fr; } }
+  .deliver-item {
+    padding: 28px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+  }
+  .deliver-item h3 { margin: 0 0 6px; font-size: 1.2rem; font-weight: 600; }
+  .deliver-item p { margin: 0 0 20px; color: var(--muted); font-size: 0.97rem; }
+
+  /* ---------- Telas maiores ---------- */
+  @media (min-width: 720px) {
+    .tool-groups { grid-template-columns: 1fr 1fr; }
+    .session {
+      grid-template-columns: 64px 1fr auto;
+      gap: 0 20px;
+    }
+    .session .num { grid-row: auto; align-self: center; }
+    .session .btn { grid-column: 3; margin-top: 0; justify-self: end; min-width: 168px; }
+  }
+  @media (min-width: 960px) {
+    .split { grid-template-columns: 280px 1fr; gap: 56px; }
+    .section-head { position: sticky; top: 96px; align-self: start; }
+  }
+  @media (max-width: 640px) {
+    .nav { display: none; }
+    .brand small { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .cursor { animation: none; }
+    .pw-reply { transition: none; }
+    .btn { transition: none; }
+  }
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="brand" href="#inicio" aria-label="Início: IA Aplicada, ABTEC">IA Aplicada <small>ABTEC</small></a>
+    <div class="topbar-right">
+      <nav class="nav" aria-label="Principal">
+        <a href="#pastas">Pasta da turma</a>
+        <a href="#ferramentas">Ferramentas</a>
+      </nav>
+      <a class="btn btn-primary btn-sm" href="https://1drv.ms/f/c/ce5f84dd4e109e17/IgCS2XMlFRVyQYjXp7Z14Wl6AegKRnwRe9VuP45qPwjS-Do" target="_blank" rel="noopener">Materiais</a>
+    </div>
+  </div>
+</header>
+
+<main id="inicio">
+
+  <!-- ================= ABERTURA ================= -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <h1>Inteligência Artificial Aplicada</h1>
+        <p class="lead">Aprenda a usar a IA com autonomia e senso crítico no estudo, no trabalho e nos seus projetos pessoais.</p>
+      </div>
+
+      <div class="prompt-window" role="img" aria-label="Exemplo de prompt dividido em persona, contexto, tarefa, formato e restrição.">
+        <div class="pw-bar" aria-hidden="true">Anatomia de um bom prompt</div>
+        <div class="pw-body" aria-hidden="true">
+          <p class="pw-prompt" id="typed"></p>
+          <div class="pw-reply" id="reply">
+            <ol>
+              <li>Até o século XVIII, quase tudo era feito à mão, em casa ou em pequenas oficinas.</li>
+              <li>A máquina a vapor passou a mover fábricas e transportes.</li>
+              <li>Muita gente deixou o campo e foi trabalhar nas cidades.</li>
+            </ol>
+          </div>
+        </div>
+        <ul class="legend" aria-hidden="true">
+          <li><i style="background:var(--c-persona)"></i>Persona</li>
+          <li><i style="background:var(--c-contexto)"></i>Contexto</li>
+          <li><i style="background:var(--c-tarefa)"></i>Tarefa</li>
+          <li><i style="background:var(--c-formato)"></i>Formato</li>
+          <li><i style="background:var(--c-restricao)"></i>Restrição</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PASTAS ================= -->
+  <section class="section" id="pastas">
+    <div class="wrap split">
+      <div class="section-head">
+        <h2>Pasta da turma</h2>
+        <p>Os materiais ficam numa pasta só. A galeria é o espaço para a turma compartilhar o que criou em aula.</p>
+      </div>
+      <div class="deliver" id="deliver-root"></div>
+    </div>
+  </section>
+
+  <!-- ================= FERRAMENTAS ================= -->
+  <section class="section" id="ferramentas">
+    <div class="wrap split">
+      <div class="section-head">
+        <h2>Ferramentas úteis</h2>
+        <p>Quase todas têm plano gratuito, com limites que mudam de tempos em tempos. Crie suas contas com antecedência.</p>
+      </div>
+      <div class="tool-groups" id="tools-root"></div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+/* =====================================================================
+   CONFIGURAÇÃO: é só aqui que você precisa mexer.
+   - "materiais": link da pasta de materiais (só visualizar).
+   - "galeria": link da pasta da galeria da turma (edição).
+   ===================================================================== */
+const CONFIG = {
+  materiais: 'https://1drv.ms/f/c/ce5f84dd4e109e17/IgCS2XMlFRVyQYjXp7Z14Wl6AegKRnwRe9VuP45qPwjS-Do',
+  galeria:   'https://1drv.ms/f/c/ce5f84dd4e109e17/IgD2gfclVsIxRqGR-uYa33jmATdhL3khNdNOuQiGphLE6z0'
+};
+
+const FERRAMENTAS = [
+  { grupo: 'Conversar e pesquisar', itens: [
+    { nome: 'ChatGPT',    url: 'https://chatgpt.com',              desc: 'Assistente de conversa da OpenAI.' },
+    { nome: 'Gemini',     url: 'https://gemini.google.com',        desc: 'Assistente do Google, integrado ao Drive.' },
+    { nome: 'Copilot',    url: 'https://copilot.microsoft.com',    desc: 'Assistente da Microsoft.' },
+    { nome: 'Claude',     url: 'https://claude.ai',                desc: 'Assistente da Anthropic, bom com textos longos.' },
+    { nome: 'Grok',       url: 'https://grok.com',                 desc: 'Assistente da xAI, integrado à rede X.' },
+    { nome: 'Perplexity', url: 'https://www.perplexity.ai',        desc: 'Busca com IA que mostra as fontes das respostas.' },
+    { nome: 'DeepSeek',   url: 'https://chat.deepseek.com',        desc: 'Assistente gratuito, forte em raciocínio e código.' },
+    { nome: 'Meta AI',    url: 'https://www.meta.ai',              desc: 'Assistente da Meta, presente no WhatsApp e no Instagram.' },
+    { nome: 'NotebookLM', url: 'https://notebooklm.google.com',    desc: 'Estude seus PDFs e documentos com respostas baseadas neles.' }
+  ]},
+  { grupo: 'Criar imagens', itens: [
+    { nome: 'Canva',              url: 'https://www.canva.com',          desc: 'Design e imagens com IA.' },
+    { nome: 'Microsoft Designer', url: 'https://designer.microsoft.com', desc: 'Artes e imagens da Microsoft.' },
+    { nome: 'Adobe Firefly',      url: 'https://firefly.adobe.com',      desc: 'Geração e edição de imagens da Adobe.' },
+    { nome: 'Leonardo.ai',        url: 'https://leonardo.ai',            desc: 'Imagens com controle de estilo.' },
+    { nome: 'Ideogram',           url: 'https://ideogram.ai',            desc: 'Boa para imagens que levam texto escrito.' },
+    { nome: 'remove.bg',          url: 'https://www.remove.bg',          desc: 'Remove o fundo de uma imagem em segundos.' }
+  ]},
+  { grupo: 'Criar áudio e música', itens: [
+    { nome: 'ElevenLabs',    url: 'https://elevenlabs.io',       desc: 'Narração e vozes realistas.' },
+    { nome: 'Suno',          url: 'https://suno.com',            desc: 'Cria músicas completas a partir de texto.' },
+    { nome: 'Udio',          url: 'https://www.udio.com',        desc: 'Geração de música por texto.' },
+    { nome: 'Adobe Podcast', url: 'https://podcast.adobe.com',   desc: 'Melhora a qualidade de gravações de voz.' }
+  ]},
+  { grupo: 'Criar e editar vídeos', itens: [
+    { nome: 'CapCut',               url: 'https://www.capcut.com',               desc: 'Edição de vídeo com legendas automáticas.' },
+    { nome: 'Clipchamp',            url: 'https://clipchamp.com',                desc: 'Editor de vídeo da Microsoft.' },
+    { nome: 'Runway',               url: 'https://runwayml.com',                 desc: 'Gera e edita vídeos a partir de texto ou imagem.' },
+    { nome: 'Pika',                 url: 'https://pika.art',                     desc: 'Vídeos curtos a partir de texto ou imagem.' },
+    { nome: 'Kling AI',             url: 'https://klingai.com',                  desc: 'Geração de vídeo por texto e imagem.' },
+    { nome: 'Luma Dream Machine',   url: 'https://lumalabs.ai/dream-machine',    desc: 'Geração de vídeo por IA.' },
+    { nome: 'HeyGen',               url: 'https://www.heygen.com',               desc: 'Vídeos com avatares que falam.' }
+  ]}
+];
+
+/* ---------- Funções auxiliares ---------- */
+function el(tag, attrs = {}, children = []) {
+  const node = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) {
+    if (k === 'class') node.className = v;
+    else if (k === 'text') node.textContent = v;
+    else node.setAttribute(k, v);
+  }
+  [].concat(children).forEach(c => node.appendChild(c));
+  return node;
+}
+
+function actionButton(link, label, extraClass) {
+  if (link) {
+    return el('a', {
+      class: 'btn btn-primary ' + (extraClass || ''),
+      href: link, target: '_blank', rel: 'noopener', text: label
+    });
+  }
+  return el('span', { class: 'btn is-off ' + (extraClass || ''), 'aria-disabled': 'true', text: 'Em breve' });
+}
+
+/* ---------- Ferramentas ---------- */
+(function renderTools() {
+  const root = document.getElementById('tools-root');
+  FERRAMENTAS.forEach(g => {
+    const ul = el('ul');
+    g.itens.forEach(i => {
+      ul.appendChild(el('li', {}, [
+        el('a', { href: i.url, target: '_blank', rel: 'noopener', text: i.nome }),
+        el('span', { text: i.desc })
+      ]));
+    });
+    root.appendChild(el('div', { class: 'tool-group' }, [el('h3', { text: g.grupo }), ul]));
+  });
+})();
+
+/* ---------- Pastas da turma ---------- */
+(function renderFolders() {
+  const root = document.getElementById('deliver-root');
+  root.appendChild(el('div', { class: 'deliver-item' }, [
+    el('h3', { text: 'Materiais' }),
+    el('p',  { text: 'Slides e conteúdo das aulas, numerados por módulo. Só para consulta e download.' }),
+    actionButton(CONFIG.materiais, 'Abrir materiais')
+  ]));
+  root.appendChild(el('div', { class: 'deliver-item' }, [
+    el('h3', { text: 'Galeria da turma' }),
+    el('p',  { text: 'Coloque aqui o que você criou em aula, como os jogos, e teste o que os colegas compartilharam.' }),
+    actionButton(CONFIG.galeria, 'Abrir galeria')
+  ]));
+})();
+
+/* ---------- Demonstração do prompt (abertura) ---------- */
+(function promptDemo() {
+  const target = document.getElementById('typed');
+  const reply  = document.getElementById('reply');
+
+  const partes = [
+    { t: 'Aja como um professor de história. ',                       c: 'persona'   },
+    { t: 'Meus alunos são adultos que nunca estudaram o tema. ',       c: 'contexto'  },
+    { t: 'Explique a Revolução Industrial ',                           c: 'tarefa'    },
+    { t: 'em 5 tópicos curtos, ',                                      c: 'formato'   },
+    { t: 'sem termos técnicos e com no máximo 120 palavras.',          c: 'restricao' }
+  ];
+
+  const reduz = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const spans = partes.map(p => {
+    const s = document.createElement('span');
+    s.className = 'seg seg-' + p.c;
+    target.appendChild(s);
+    return s;
+  });
+  const cursor = document.createElement('span');
+  cursor.className = 'cursor';
+  target.appendChild(cursor);
+
+  if (reduz) {
+    partes.forEach((p, i) => { spans[i].textContent = p.t; });
+    cursor.classList.add('is-done');
+    reply.classList.add('is-on');
+    return;
+  }
+
+  let i = 0, j = 0;
+  function tick() {
+    if (i >= partes.length) {
+      cursor.classList.add('is-done');
+      setTimeout(() => reply.classList.add('is-on'), 250);
+      return;
+    }
+    spans[i].textContent += partes[i].t.charAt(j);
+    spans[i].after(cursor);
+    j++;
+    if (j >= partes[i].t.length) { i++; j = 0; }
+    setTimeout(tick, 24);
+  }
+  setTimeout(tick, 500);
+})();
+</script>
+</body>
+</html>
